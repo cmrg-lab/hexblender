@@ -1,0 +1,72 @@
+RefactoringTool: Skipping implicit fixer: buffer
+RefactoringTool: Skipping implicit fixer: idioms
+RefactoringTool: Skipping implicit fixer: set_literal
+RefactoringTool: Skipping implicit fixer: ws_comma
+RefactoringTool: Refactored hexblender_operators.py
+RefactoringTool: Files that need to be modified:
+RefactoringTool: hexblender_operators.py
+--- hexblender_operators.py	(original)
++++ hexblender_operators.py	(refactored)
+@@ -118,7 +118,7 @@
+         # file which makes our lives easier when exporting
+         hexblender_helpers.cache_data(elems, mats)
+ 
+-        print("Successfully imported %s" % self.filepath)
++        print(("Successfully imported %s" % self.filepath))
+         return {'FINISHED'}
+ 
+     def invoke(self, context, event):
+@@ -145,7 +145,7 @@
+             mesh = hexblender_helpers.get_mesh(context)
+             verts = mesh.vertices
+         except Exception as msg:
+-            print("Error getting vertices: %" % msg)
++            print(("Error getting vertices: %" % msg))
+             return {'CANCELLED'}
+ 
+         # === Header ===
+@@ -158,7 +158,7 @@
+             file.write('%d\t%d\n' %(i+1,i+1))
+ 
+         file.close()
+-        print("Successfully exported %s" % self.filepath) 
++        print(("Successfully exported %s" % self.filepath)) 
+         return {'FINISHED'}
+ 
+     def invoke(self, context, event):
+@@ -191,7 +191,7 @@
+                 cubes, hex_mat_new = hexblender_helpers.reload_hex(json.loads(mesh.cached_data_json))
+                 print("Reloaded stored hex data!")
+             except Exception as msg:
+-                print("Error reloading hex data: %s" % msg)
++                print(("Error reloading hex data: %s" % msg))
+         else:
+             # XXX Untested route!
+             #there might be a little bug here not properly using contiguousRegions() that can be fixed by tabbing in and out
+@@ -215,7 +215,7 @@
+ 
+         file.close()
+ 
+-        print("Successfully exported %s" % self.filepath) 
++        print(("Successfully exported %s" % self.filepath)) 
+         return {'FINISHED'}
+ 
+     def invoke(self, context, event):
+@@ -286,7 +286,7 @@
+                     cubes, matList = hexblender_helpers.reload_hex(json.loads(mesh.cached_data_json))
+                     print("Reloaded stored hex data!")
+                 except Exception as msg:
+-                    print("Error reloading hex data: %s" % msg)
++                    print(("Error reloading hex data: %s" % msg))
+             else:
+                 # XXX Untested route!
+                 # there might be a little bug here not properly using 
+@@ -514,7 +514,7 @@
+             Bz[i,7,:] = tmp.copy()
+ 
+             self.write_hermite_deriv(self.filepath, Bx, By, Bz)
+-            print("Successfully exported %s" % self.filepath) 
++            print(("Successfully exported %s" % self.filepath)) 
+             return {'FINISHED'}
+ 
+     def invoke(self, context, event):
