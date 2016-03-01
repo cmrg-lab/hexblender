@@ -58,12 +58,33 @@ class HEXBLENDER_PT_exports(bpy.types.Panel):
         row = layout.row(align=True)
         row.operator("hexblender.export_vertices", text="Export Cont Vertices")
 
+        ########## MD 1/30/16 #########################
+        row = layout.row(align=True)
+        row.prop(hex_scene.hexblender_properties, "export_vert_weights")
+        row = layout.row(align=True)
+        if int(hex_scene.hexblender_properties.export_vert_weights) == 1:
+            row.prop(hex_scene.hexblender_properties, "group_name")
+            row = layout.row(align=True)
+            col = row.column(align=True)
+            # CV 02/29/16: Need to change behavior of export_vertices to use export_vert_weights; for now, duplicate button
+            #col.prop(hex_scene.hexblender_properties, "group_weight_add", icon='ZOOMIN', text="")
+            #col.prop(hex_scene.hexblender_properties, "group_weight_remove", icon='ZOOMOUT', text="")
+            row = layout.row(align=True)
+        ###############################################
+
         row = layout.row(align=True)
         row.operator("hexblender.export_elements", text="Export Hex Elements")
 
         row = layout.row(align=True)
         row.operator("hexblender.export_face_keys", text="Export Face Elements")
 
+        #### MD 1/19/2016 - VERTEX WEIGHTS - SCALED ####
+        layout.separator()
+        row = layout.row(align=True)
+        row.operator("hexblender.export_vertex_weights", text="Export Vertex Weights")
+        row.prop(hex_scene.hexblender_properties, "vert_weight_scalar")
+        row = layout.row(align=True)
+        ####### PROOF OF CONCEPT - FUNCTIONALITY ########
 
         # TRICUBIC DERIVS
         layout.separator()

@@ -68,8 +68,48 @@ def get_reg_priorities(self):
 def set_reg_priorities(self, value):
     self["reg_priorities"] = value
 
+######## MD 1/30/2016 - GROUP NAMES TO DROP DOWN FORMAT########
+def get_name_group(scene, context):
+    if bpy.context.active_object is not None and\
+       bpy.context.active_object.type == "MESH":
+        name_group = []
+        groups = bpy.context.active_object.vertex_groups.keys()
+        if len(groups) > 0:
+            for i,j in enumerate(groups):
+                name_group += [(str(i), str(j), str(j), i)]
+        else:
+            name_group.append(("0","No groups","No groups",0))
+
+        return name_group
+
+def get_group_names(self):
+    return self.get('group_name_enums', '%s' % get_name_group())
+
+def set_group_names(self,value):
+    self["group_name_enums"] = value
+###############################################################
 
 class HexBlenderObjectPanelProperty(bpy.types.PropertyGroup):
+    ################ MD 1/30/2016 - VERTEX WEIGHTS INPUT PROPERTIES #################
+    export_vert_weights = BoolProperty(
+        name="Export Vertex Weights", default=False,
+        description="Export vertex weights appended to Cont Vertices .txt file")
+    # CV: Is there a way to make multiple selections for the vertex groups? Can write all out 
+    # to file simultaneously.
+    group_name = EnumProperty(name = "Vertex Groups", 
+                                description = "Select vertex group with weight paint layer",
+                                items = get_name_group)
+
+    vert_weight_scalar = FloatProperty(
+        name = "Scaling Factor", default=1.00, min=0.00,
+        description="Factor to scale vertex weights to real values")
+
+    field_name = EnumProperty(name = "Nodal Fields", 
+                            description = "Select nodal fields to assign from vertex group/weight paint layer",
+                            items = get_name_group)    
+    #################################################################################
+
+
     tri_cubic_iters = IntProperty(
         name="Iterations", default=0, min=0, 
         description="Number of iterations to perform")
