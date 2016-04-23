@@ -216,6 +216,39 @@ class HEXBLENDER_OT_export_elements(bpy.types.Operator, ExportHelper):
         context.window_manager.fileselect_add(self)
         return {'RUNNING_MODAL'}
 
+
+########### MD 1/12/2016 #################################################
+class HEXBLENDER_OT_export_vertexweights(bpy.types.Operator, ExportHelper):
+    # created by Melody Dong 1/2016
+    """Export scaled vertex weights to .txt file"""
+
+    bl_idname = "hexblender.export_vertex_weights"
+    bl_label = "Export Vertex Weights"
+    bl_description = ("Export vertex weights to .txt file.")
+    bl_options = {'REGISTER'}
+
+    # ExportHelper mixin class uses this
+    filename_ext = ".txt"
+
+    filter_glob = bpy.props.StringProperty(
+            default="*.txt",
+            options={'HIDDEN'},
+            )
+
+    @classmethod
+    def poll(cls, context):
+        return context.object is not None
+
+    def execute(self, context):
+        return_code, vertweight_text = hexblender_helpers.compute_write_out_vertex_weights(context, self.filepath)
+        return return_code
+
+    def invoke(self, context, event):
+        self.filepath = "vert_weights.txt"
+        context.window_manager.fileselect_add(self)
+        return {'RUNNING_MODAL'}     
+############################################################################
+
 class HEXBLENDER_OT_export_hermite_tricubic_derivs(bpy.types.Operator, ExportHelper):
     """Export Hermite Tricubic derivatives in Continuity format"""
 

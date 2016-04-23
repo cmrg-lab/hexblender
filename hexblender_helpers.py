@@ -1062,12 +1062,58 @@ def write_out_vertices(filename = None):
         return {'CANCELLED'}, None
 
     # === Header ===
-    vert_string = 'Coords_1_val\tCoords_2_val\tCoords_3_val\tLabel\tNodes\n'
+    if hex_prop.export_vert_weights:
+        # export verts with weights
+        vert_string = 'Coords_1_val\tCoords_2_val\tCoords_3_val'
+
+        # from panels, get names of selected vertex groups/weight paint layer(s) to export,
+        # and add field variable header(s)
+        group_name = hex_prop.group_name
+        field_name = hex_prop.field_name
+        # need to be able to specify which field user wants to assign from weight paint layer
+        # nodal_fields = ['FieldVec1_Var1','FieldVec1_Var2','FieldVec1_Var3',
+        #                'FieldVec2_Var4','FieldVec2_Var5','FieldVec2_Var6',
+        #                'FieldVec3_Var7','FieldVec3_Var8','FieldVec3_Var9',
+        #                'FieldVec4_Var10','FieldVec4_Var11','FieldVec4_Var12',
+        #                'FieldVec5_Var13','FieldVec5_Var14','FieldVec5_Var15']
+        # field_names  = ['Field 1','Field 2','Field 3',
+        #                'Field 4','Field 5','Field 6',
+        #                'Field 7','Field 8','Field 9',
+        #                'Field 10','Field 11','Field 12']
+        field_dict = {'Fiber angle':'FibAng_Fiber','Transverse angle':'FibAng_Trans','Sheet angle':'FibAng_Sheet',
+                      'Field 1':'FieldVec1_Var1','Field 2':'FieldVec1_Var2','Field 3':'FieldVec1_Var3',
+                      'Field 4':'FieldVec2_Var4','Field 5':'FieldVec2_Var5','Field 6':'FieldVec2_Var6',
+                      'Field 7':'FieldVec3_Var7','Field 8':'FieldVec3_Var8','Field 9':'FieldVec3_Var9',
+                      'Field 10':'FieldVec4_Var10','Field 11':'FieldVec4_Var11','Field 12':'FieldVec4_Var12',
+                      'Field 13':'FieldVec5_Var13','Field 14':'FieldVec5_Var14','Field 15':'FieldVec5_Var15'}
+        # 
+        for k in field_name:
+            vert_string = ('\t%s_val' % field_dict[k])
+        vert_string += ('\tLabel\tNodes\n')
+    else:
+        # export verts only
+        vert_string = 'Coords_1_val\tCoords_2_val\tCoords_3_val\tLabel\tNodes\n'
 
     # === Vertex List ===
-    for i, v in enumerate(verts):
-        vert_string += ('%.6f\t%.6f\t%.6f' % (tuple(v.co)))
-        vert_string += ('\t%d\t%d\n' % (i+1,i+1))
+    if hex_prop.export_vert_weights:
+        # CV: get name of selected vertex group to export
+        for i, v in enumerate(verts):
+            vert_string += ('%.6f\t%.6f\t%.6f' % (tuple(v.co)))
+            # CV: Need to figure a way to get weights of selected vertex group (weight paint layer).
+            # When weight painting, Blender only includes painted vertices in the vertex group.
+            # If a vertex does not belong to the weight paint group, it's default value should 
+            # be set to 0 when written to the output string.
+            # An alternative is to create a vertex group (weight paint layer) that includes all
+            # vertices; all vertices need to be painted/initialized with zero weight so that
+            # when we call a vertex group by name, we can be confident that all vertices are
+            # included in the vertex group, and the output string will be easier to write in
+            # vert_string += ('%.6f\t%d\t%d\n' % (v[vertex_group_names].weight,i+1,i+1))
+
+            vert_string += ('%.6f\t%d\t%d\n' % (v.weight,i+1,i+1))
+    else:
+        for i, v in enumerate(verts):
+            vert_string += ('%.6f\t%.6f\t%.6f' % (tuple(v.co)))
+            vert_string += ('\t%d\t%d\n' % (i+1,i+1))
 
     if filename is not None:
         myfile = open(filename, 'w')
@@ -1077,6 +1123,64 @@ def write_out_vertices(filename = None):
 
     reset_mode(orig_mode)
     return {'FINISHED'}, vert_string
+
+########### MD 1/12/2016 ###########
+def compute_write_out_vertex_weights(context, filename = None):
+    try:
+        # identifies vertex and weights in the selected group
+        mesh, orig_mode = get_active_mesh()
+        verts = mesh.vertices
+        obj = bpy.context.active_object
+        bpy.ops.object.mode_set(mode='OBJECT',toggle=True)
+        mesh = obj.data
+        selVerts = [v for v in mesh.vertices]
+        indexVal = obj.vertex_groups.active_index
+        weights = []
+        vert_weights = []
+        for v in selVerts:
+            for n in v.groups:
+                if n.group == indexVal:
+                    weights.append([v,n.weight])
+                    vert_weights.append([weights[-1][0].index,weights[-1][1]])
+    except Exception as msg:
+        print("Error getting vertex weights: %" % msg)
+        return {'CANCELLED'}, None
+    
+    try:
+        hex_scene = context.scene.hexblender
+    except Exception as msg:
+        print("ERROR: Unable to get hexblender scene!  %s" % msg)
+        return {'CANCELLED'}, None
+
+    scale_f = hex_scene.hexblender_properties.vert_weight_scalar
+    vert_weights_scaled = []
+    if scale_f != 1.00:
+        for v in vert_weights:
+            vert_weights_scaled.append([v[0], scale_f*v[1]])
+    else:
+        vert_weights_scaled = vert_weights
+
+    # === Header ===
+    vertweight_string = 'Vertex\tWeight\n'
+    # some mess here; should write out vertex weights as field in Continuity nodes file (CTV 04/23/2016)
+    # vert_string = 'Coords_1_val\tCoords_2_val\tCoords_3_val\tLabel\tNodes\n'
+    # import pdb; pdb.set_trace()
+    # === Vertex List ===
+    for i in vert_weights_scaled:
+        vertweight_string += ('%d\t%.6f\n' % (i[0],i[1]))
+        # vert_string += ('%.6f\t%.6f\t%.6f' % (tuple(v.co)))
+        # vertweight_string += ('%.6f\t%.6f\t%.6f' % (tuple(v.co)))
+        # vertweight_string += ('\t%d\t%d\n' % (i+1,i+1))
+
+    if filename is not None:
+        myfile = open(filename, 'w')
+        myfile.write(vertweight_string)
+        myfile.close()
+        print("Successfully exported %s" % filename) 
+
+    reset_mode(orig_mode)
+    return {'FINISHED'}, vertweight_string
+####################################
 
 def write_out_3d_elements(filename = None):
     try:
