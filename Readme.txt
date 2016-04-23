@@ -2,13 +2,13 @@
 Some usage notes on the HexBlender addon
 ================================================================
 
-The HexBlender scripts are being developed using Blender 2.75a.
+The HexBlender scripts are being developed using Blender 2.77.
 
 =============================
 Installing HexBlender addon
 =============================
 To install HexBlender as a Blender addon:
-1) All the Hexblender code can be found within Continuity at src/blender/blender_2.7.  Run the make_install_file.py which will create a zip file named hexblender.zip, or simply use the existing hexblender.zip file if it is up to date.  Note, you can create that zip file with Python 2.7, it doesn't need to be Python 3 even though Blender 2.75a uses Python 3.
+1) All the Hexblender code can be found within Continuity at src/blender/blender_2.7.  Run the make_install_file.py which will create a zip file named hexblender.zip, or simply use the existing hexblender.zip file if it is up to date.  Note, you can create that zip file with Python 2.7, it doesn't need to be Python 3 even though Blender 2.77 uses Python 3.5.1.
 
 2) You will need to install scipy within Blender's Python before using Hexblender:
 
@@ -21,13 +21,13 @@ http://cmrg.ucsd.edu/wiki/widget/data/scipy_0_14_0_osx_10_10.tar.gz
 and put the included scipy directory in the site-packages directory within the Blender installation.
 
 ########### Windows #############
-On Windows 64bit systems we have been successful in putting the site-packages directory from Anaconda (http://continuum.io/downloads -- be sure to get the Python 3 64bit version) into our PYTHONPATH definition.
+On Windows 64bit systems we have been successful in putting the site-packages directory from Anaconda (http://continuum.io/downloads -- be sure to get the Python 3.5 64bit version) into our PYTHONPATH definition.
 Something like the following worked for us:
 PYTHONPATH = C:\Anaconda3\lib\site-packages.  
 After doing that Hexblender did load and work successfully.
 
 You will likely need to add PYTHONPATH as a new system environmental variable.
-For Windows 8, just search for system variables
+For Windows 8 and 10, just search for system variables
 For Windows 7, Start -> Right Click on Computer -> Properties -> Advanced -> Environmental Variables.
 
 ########### Linux #############
