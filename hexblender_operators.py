@@ -1744,6 +1744,15 @@ class HEXBLENDER_OT_get_tensor_input_file(bpy.types.Operator):
         context.window_manager.fileselect_add(self)
         return {'RUNNING_MODAL'}
 
+class HEXBLENDER_OT_get_tensor_output_file(bpy.types.Operator):
+    '''
+    Stub for tensor output file method
+    '''
+    bl_idname = "hexblender.get_tensor_output_file"
+    bl_label = "Set Tensor Data Output Location"
+    bl_description = ("Set Tensor Data Output File Location")
+    bl_options = {'REGISTER'}
+
 
 class HEXBLENDER_OT_compute_tensor_xform(bpy.types.Operator):
     '''

@@ -45,10 +45,10 @@ def unregister():
 
 #HexBlendereGUI Panels:
 class HEXBLENDER_PT_exports(bpy.types.Panel):
-    bl_label = "HexBlender - Exports"
-    bl_space_type = "PROPERTIES"
-    bl_region_type = "WINDOW"
-    bl_context = "object"
+    bl_label = "Hex - Exports"
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "TOOLS"
+    bl_category = "Hex Render/Export"
     bl_options = {'DEFAULT_CLOSED'}
 
     def draw(self, context):
@@ -56,11 +56,9 @@ class HEXBLENDER_PT_exports(bpy.types.Panel):
         hex_scene = context.scene.hexblender
 
         row = layout.row(align=True)
-        row.operator("hexblender.export_vertices", text="Export Cont Vertices")
-
-        ########## MD 1/30/16 #########################
-        row = layout.row(align=True)
+        row.operator("hexblender.export_vertices", text="Cont. Vertices")
         row.prop(hex_scene.hexblender_properties, "export_vert_weights")
+
         row = layout.row(align=True)
         if int(hex_scene.hexblender_properties.export_vert_weights) == 1:
             row.prop(hex_scene.hexblender_properties, "group_name")
@@ -72,24 +70,22 @@ class HEXBLENDER_PT_exports(bpy.types.Panel):
             row = layout.row(align=True)
         ###############################################
 
-        row = layout.row(align=True)
-        row.operator("hexblender.export_elements", text="Export Hex Elements")
-
-        row = layout.row(align=True)
-        row.operator("hexblender.export_face_keys", text="Export Face Elements")
+        row = layout.row(align=False)
+        row.operator("hexblender.export_elements", text="Hex Elements")
+        row.operator("hexblender.export_face_keys", text="Face Elements")
 
         #### MD 1/19/2016 - VERTEX WEIGHTS - SCALED ####
         layout.separator()
         row = layout.row(align=True)
-        row.operator("hexblender.export_vertex_weights", text="Export Vertex Weights")
+        row.operator("hexblender.export_vertex_weights", text="Vertex Weights")
         row.prop(hex_scene.hexblender_properties, "vert_weight_scalar")
+
         row = layout.row(align=True)
         ####### PROOF OF CONCEPT - FUNCTIONALITY ########
-
         # TRICUBIC DERIVS
         layout.separator()
         row = layout.row(align=True)
-        row.operator("hexblender.export_hermite_tricubic_derivs", text="Export Hermite Tricubic Derivs")
+        row.operator("hexblender.export_hermite_tricubic_derivs", text="Hermite Tricubic Derivs")
         row.prop(hex_scene.hexblender_properties, "tri_cubic_iters")
         row = layout.row(align=True)
 
@@ -117,28 +113,23 @@ class HEXBLENDER_PT_exports(bpy.types.Panel):
         row = layout.row(align=True)
         row.prop(hex_scene.hexblender_properties, "reg_priorities")
 
-        row = layout.row(align=True)
-        row.operator("hexblender.export_hermite_bicubic_derivs", text="Export Hermite Bicubic Derivs")
+        row = layout.row(align=False)
+        row.operator("hexblender.export_hermite_bicubic_derivs", text="Hermite Bicubic Derivs")
+        row.operator("hexblender.export_bundled_2d_mesh", text="Bundled Bicubic Mesh")
 
-        row = layout.row(align=True)
-        row.operator("hexblender.export_bundled_2d_mesh", text="Export Bundled Bicubic Mesh")
-
-        row = layout.row(align=True)
-        row.operator("hexblender.export_global_to_local_map", text="Export Global to Local Map")
-
-        row = layout.row(align=True)
-        row.operator("hexblender.export_fit_data_points", text="Export Fit Data Points")
+        row = layout.row(align=False)
+        row.operator("hexblender.export_global_to_local_map", text="Global to Local Map")
+        row.operator("hexblender.export_fit_data_points", text="Fit Data Points")
 
         #row = layout.row(align=True)
         #row.operator("hexblender.export_cont_fitting", text="Export Cont Fitting")
 
 
 class HEXBLENDER_PT_imports(bpy.types.Panel):
-    bl_label = "HexBlender - Imports"
-    bl_space_type = "PROPERTIES"
-    bl_region_type = "WINDOW"
-    bl_context = "scene"
-    bl_options = {'DEFAULT_CLOSED'}
+    bl_label = "Hex - Imports"
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "TOOLS"
+    bl_category = "HexBlender Tools"
 
     def draw(self, context):
         layout = self.layout
@@ -149,10 +140,10 @@ class HEXBLENDER_PT_imports(bpy.types.Panel):
 
 
 class HEXBLENDER_PT_hex_tools(bpy.types.Panel):
-    bl_label = "HexBlender - Hex Tools"
-    bl_space_type = "PROPERTIES"
-    bl_region_type = "WINDOW"
-    bl_context = "object"
+    bl_label = "Hex - Tools"
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "TOOLS"
+    bl_category = "HexBlender Tools"
     bl_options = {'DEFAULT_CLOSED'}
 
     def draw(self, context):
@@ -214,10 +205,10 @@ class HEXBLENDER_PT_hex_tools(bpy.types.Panel):
         # row.operator("hexblender.fix_hex_keys", text="Fix Hex Keys")
 
 class HEXBLENDER_PT_sfc_tools(bpy.types.Panel):
-    bl_label = "HexBlender - Quad Tools"
-    bl_space_type = "PROPERTIES"
-    bl_region_type = "WINDOW"
-    bl_context = "object"
+    bl_label = "Hex- Quad Tools"
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "TOOLS"
+    bl_category = "HexBlender Tools"
     bl_options = {'DEFAULT_CLOSED'}
 
     def draw(self, context):
@@ -251,10 +242,10 @@ class HEXBLENDER_PT_sfc_tools(bpy.types.Panel):
 
 
 class HEXBLENDER_PT_selection_tools(bpy.types.Panel):
-    bl_label = "HexBlender - Selection Tools"
-    bl_space_type = "PROPERTIES"
-    bl_region_type = "WINDOW"
-    bl_context = "object"
+    bl_label = "Hex - Selection Tools"
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "TOOLS"
+    bl_category = "HexBlender Tools"
     bl_options = {'DEFAULT_CLOSED'}
 
     def draw(self, context):
@@ -319,10 +310,10 @@ class HEXBLENDER_PT_selection_tools(bpy.types.Panel):
 
 
 class HEXBLENDER_PT_tensor_tools(bpy.types.Panel):
-    bl_label = "HexBlender - Tensor Tools"
-    bl_space_type = "PROPERTIES"
-    bl_region_type = "WINDOW"
-    bl_context = "object"
+    bl_label = "Hex - Tensor Tools"
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "TOOLS"
+    bl_category = "HexBlender Tools"
     bl_options = {'DEFAULT_CLOSED'}
 
     def draw(self, context):
@@ -341,7 +332,7 @@ class HEXBLENDER_PT_tensor_tools(bpy.types.Panel):
         row.prop(hex_scene.hexblender_properties, "tensor_input_file")
 
         row = layout.row(align=True)
-        row.operator("hexblender.get_tensor_input_file", text="Set tensor input file")
+        row.operator("hexblender.get_tensor_output_file", text="Set tensor output file")
         row = layout.row(align=True)
         row.prop(hex_scene.hexblender_properties, "tensor_output_file")
 
@@ -352,10 +343,10 @@ class HEXBLENDER_PT_tensor_tools(bpy.types.Panel):
 
 #HexBlendereGUI Panels:
 class HEXBLENDER_PT_render(bpy.types.Panel):
-    bl_label = "HexBlender - Render"
-    bl_space_type = "PROPERTIES"
-    bl_region_type = "WINDOW"
-    bl_context = "object"
+    bl_label = "Hex - Render"
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "TOOLS"
+    bl_category = "Hex Render/Export"
     bl_options = {'DEFAULT_CLOSED'}
 
     def draw(self, context):

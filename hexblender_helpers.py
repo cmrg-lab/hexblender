@@ -1060,10 +1060,20 @@ def write_out_vertices(filename = None):
     except Exception as msg:
         print("Error getting vertices: %" % msg)
         return {'CANCELLED'}, None
-
+    
     # === Header ===
+
+    try:
+        hex_scene = bpy.context.scene.hexblender
+    except Exception as msg:
+        print("ERROR: Unable to get hexblender scene!  %s" % msg)
+        return {'FINISHED'}, None
+
+    hex_prop = hex_scene.hexblender_properties
+
     if hex_prop.export_vert_weights:
         # export verts with weights
+
         vert_string = 'Coords_1_val\tCoords_2_val\tCoords_3_val'
 
         # from panels, get names of selected vertex groups/weight paint layer(s) to export,
