@@ -20,9 +20,11 @@ For now, our revision number will simply be: MajorVersion.NumberOfCommits
 Script Requirement: the git executable needs to be in your PATH
 '''
 import os
+import shutil
 from subprocess import check_output
 
 TEMP_FILENAME = "asdofiasdj.txt"
+INIT_FILENAME = "__init__.py"
 
 MAJOR_VERSION = 1
 
@@ -54,13 +56,16 @@ except Exception as msg:
 # Now update the __init.py__ file
 try:
     output = open (TEMP_FILENAME, 'wt')
-    with open("__init__.py", 'r') as file:
+    with open(INIT_FILENAME, 'r') as file:
         for line in file:
             if '"version"' in line:
                 line = '    "version": (%d,%d),\n' %(MAJOR_VERSION, new_commit_value)
             output.write(line)
 
     output.close()
+
+    # copy the file
+    shutil.copy(TEMP_FILENAME, INIT_FILENAME)
     print("__init__.py has been updated.")
 
     #remove temp file
