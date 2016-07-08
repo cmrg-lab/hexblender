@@ -22,12 +22,12 @@ import os
 bl_info = {
     "name": "HexBlender",
     "author": "Cardiac Mechanics Research Group, UCSD Bioengineering Dept.",
-    "version": (8258,),
+    "version": (1,7),
     "blender": (2, 70, 5),
     "location": "Properties > Object > HexBlender Panel and Properties -> Scene > HexBlender Panel",
     "description": "HexBlender Mesh Tools for Continuity",
     "warning": "",
-    "wiki_url": "http://lys.ucsd.edu/hexblender",
+    "wiki_url": "https://github.com/cmrglab/hexblender",
     "category": "Mesh Tools"
 }
 
@@ -41,9 +41,14 @@ hexblender_info = {
     "hexblender_addon_path": "",
 }
 
+
+#See if Removing this still works!!!
+'''
 if __name__ == '__main__':
+    print("Came1")
     print("HexBlender is running as __main__")
     identify_source_version("")
+'''
 
 # To support reload properly, try to access a package var.
 # If it's there, reload everything
@@ -54,7 +59,6 @@ if "bpy" in locals():
     imp.reload(hexblender_operators)
     imp.reload(hexblender_helpers)
     imp.reload(hexblender_properties)
-
 else:
     print("Importing HexBlender")
     from . import hexblender_panels
@@ -68,23 +72,27 @@ import sys
 
 # We use per module class registration/unregistration
 def register():
+
     bpy.utils.register_module(__name__)
 
     # Unregister and re-register panels to display them in order
-    bpy.utils.unregister_class(hexblender_panels.HEXBLENDER_PT_exports)
     bpy.utils.unregister_class(hexblender_panels.HEXBLENDER_PT_imports)
+    bpy.utils.unregister_class(hexblender_panels.HEXBLENDER_PT_exports)
     bpy.utils.unregister_class(hexblender_panels.HEXBLENDER_PT_hex_tools)
     bpy.utils.unregister_class(hexblender_panels.HEXBLENDER_PT_sfc_tools)
     bpy.utils.unregister_class(hexblender_panels.HEXBLENDER_PT_selection_tools)
     bpy.utils.unregister_class(hexblender_panels.HEXBLENDER_PT_tensor_tools)
     bpy.utils.unregister_class(hexblender_panels.HEXBLENDER_PT_render)
 
-    bpy.utils.register_class(hexblender_panels.HEXBLENDER_PT_exports)
+
     bpy.utils.register_class(hexblender_panels.HEXBLENDER_PT_imports)
+    bpy.utils.register_class(hexblender_panels.HEXBLENDER_PT_exports)
+
     bpy.utils.register_class(hexblender_panels.HEXBLENDER_PT_hex_tools)
     bpy.utils.register_class(hexblender_panels.HEXBLENDER_PT_sfc_tools)
     bpy.utils.register_class(hexblender_panels.HEXBLENDER_PT_selection_tools)
     bpy.utils.register_class(hexblender_panels.HEXBLENDER_PT_tensor_tools)
+
     bpy.utils.register_class(hexblender_panels.HEXBLENDER_PT_render)
 
     # Properties
@@ -103,6 +111,7 @@ def register():
 
 
 def unregister():
+
     bpy.utils.unregister_module(__name__)
     del bpy.types.Scene.hexblender
 
@@ -111,4 +120,5 @@ def unregister():
 
 # for testing
 if __name__ == '__main__':
+    print("Came6")
     register()
