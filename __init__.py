@@ -22,7 +22,7 @@ import os
 bl_info = {
     "name": "HexBlender",
     "author": "Cardiac Mechanics Research Group, UCSD Bioengineering Dept.",
-    "version": (1,7),
+    "version": (1,9),
     "blender": (2, 70, 5),
     "location": "Properties > Object > HexBlender Panel and Properties -> Scene > HexBlender Panel",
     "description": "HexBlender Mesh Tools for Continuity",
