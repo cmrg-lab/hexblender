@@ -19,6 +19,8 @@ try:
     for f in all_files:
         if f.endswith(".py") and "make_install" not in f:
             shutil.copy(f, dirname)
+        if "REVISION.txt" in f:
+            shutil.copy(f, dirname)
 except Exception as msg:
     print("ERROR: Unable to copy files.  \n%s" % msg)
 
