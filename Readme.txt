@@ -21,7 +21,8 @@ https://www.dropbox.com/s/w38yb331e64k2sl/scipy.zip?dl=0
 and copy it into the site-packages directory within the Blender installation.
 
 ########### Windows #############
-On Windows 64bit systems we have been successful in putting the site-packages directory from Anaconda (http://continuum.io/downloads) into our PYTHONPATH definition; for Blender 2.77a, we use the site-packages library from Anaconda3-4.0.0-Windows-x86_64.exe
+On Windows 64bit systems we include the site-packages directory from Anaconda (http://continuum.io/downloads) into our PYTHONPATH definition;
+for Blender 2.77a, we use the site-packages library from Anaconda3-4.0.0-Windows-x86_64.exe
 
 To do this, you'll need to add PYTHONPATH as a new system environmental variable:
 For Windows 8 and 10, search for "system variables" in the Control Panel.
