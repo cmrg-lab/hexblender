@@ -13,22 +13,20 @@ To install HexBlender as a Blender addon:
 2) You will need to install scipy within Blender's Python before using Hexblender:
 
 ########### Mac #############
-On Mac systems we have been successful in simply copying the scipy directory from Anaconda (http://continuum.io/downloads -- be sure to get the Python 3 version), into the appropriate place within the Blender installation.  Something like the following worked for us:
-Mac: cp -r /Anaconda/lib/python3.4/site-packages/scipy /Applications/Blender275a/blender.app/Contents/Resources/2.75/python/lib/python3.4/site-packages/
+On Mac systems we have been successful in simply copying the scipy directory from Anaconda (http://continuum.io/downloads -- be sure to get the Python 3.5 version), into the appropriate place within the Blender installation.  Something like the following worked for us:
+Mac: cp -r /Anaconda/lib/python3.5/site-packages/scipy /Applications/Blender_2.77a/blender.app/Contents/Resources/2.77/python/lib/python3.5/site-packages/
 
 Alternatively, you can simply download Anaconda's scipy directory from here:
-http://cmrg.ucsd.edu/wiki/widget/data/scipy_0_14_0_osx_10_10.tar.gz
-and put the included scipy directory in the site-packages directory within the Blender installation.
+https://www.dropbox.com/s/w38yb331e64k2sl/scipy.zip?dl=0
+and copy it into the site-packages directory within the Blender installation.
 
 ########### Windows #############
-On Windows 64bit systems we have been successful in putting the site-packages directory from Anaconda (http://continuum.io/downloads -- be sure to get the Python 3.5 64bit version) into our PYTHONPATH definition.
-Something like the following worked for us:
-PYTHONPATH = C:\Anaconda3\lib\site-packages.  
-After doing that Hexblender did load and work successfully.
+On Windows 64bit systems we have been successful in putting the site-packages directory from Anaconda (http://continuum.io/downloads) into our PYTHONPATH definition; for Blender 2.77a, we use the site-packages library from Anaconda3-4.0.0-Windows-x86_64.exe
 
-You will likely need to add PYTHONPATH as a new system environmental variable.
-For Windows 8 and 10, just search for system variables
+To do this, you'll need to add PYTHONPATH as a new system environmental variable:
+For Windows 8 and 10, search for "system variables" in the Control Panel.
 For Windows 7, Start -> Right Click on Computer -> Properties -> Advanced -> Environmental Variables.
+set PYTHONPATH=C:\Anaconda3\Lib\site-packages
 
 ########### Linux #############
 On Linux 64bit systems we have been successful in putting the site-packages directory from Anaconda (http://continuum.io/downloads -- be sure to get the Python 3 64bit version) into our PYTHONPATH definition.
