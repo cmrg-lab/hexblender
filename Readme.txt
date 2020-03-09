@@ -12,6 +12,8 @@ To install HexBlender as a Blender addon:
 
 2) You will need to install scipy within Blender's Python before using Hexblender:
 
+3) hexblender.zip includes all the files you need as a Blender add-on.
+
 ########### Mac #############
 On Mac systems we have been successful in simply copying the scipy directory from Anaconda (http://continuum.io/downloads -- be sure to get the Python 3.5 version), into the appropriate place within the Blender installation.  Something like the following worked for us:
 Mac: cp -r /Anaconda/lib/python3.5/site-packages/scipy /Applications/Blender_2.77a/blender.app/Contents/Resources/2.77/python/lib/python3.5/site-packages/
@@ -22,12 +24,18 @@ and copy it into the site-packages directory within the Blender installation.
 
 ########### Windows #############
 On Windows 64bit systems we include the site-packages directory from Anaconda (http://continuum.io/downloads) into our PYTHONPATH definition;
-for Blender 2.77a, we use the site-packages library from Anaconda3-4.0.0-Windows-x86_64.exe
+Instructions:
+1. Download and install Anaconda
+2. Open up Anaconda Prompt as an administrator
+3. Type "conda create --name blender python=3.5" and press enter
+4. Type "conda activate blender" and press enter
+5. Type "pip install numpy" and press enter
+6. Type "pip install scipy" and press enter
+7. Set your PYTHONPATH environment variable to equal "<base folder path for anaconda>/envs/blender"
 
 To do this, you'll need to add PYTHONPATH as a new system environmental variable:
 For Windows 8 and 10, search for "system variables" in the Control Panel.
 For Windows 7, Start -> Right Click on Computer -> Properties -> Advanced -> Environmental Variables.
-set PYTHONPATH=C:\Anaconda3\Lib\site-packages
 
 ########### Linux #############
 On Linux 64bit systems we have been successful in putting the site-packages directory from Anaconda (http://continuum.io/downloads -- be sure to get the Python 3 64bit version) into our PYTHONPATH definition.
